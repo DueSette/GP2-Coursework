@@ -37,30 +37,17 @@ enum ColliderType {NONE, SPHERE, BOX }; //useful for scaling and pattern matchin
 
 //base class, never used directly
 class Collider
-{
-public:
-	//we make every collider able to return a vec3 of its size for compatibility
-	virtual glm::vec3 getSize()
-	{
-		std::cout << "wrong";
-		return VECTOR_ZERO;
-	}
-};
+{};
 
 class SphereCollider : public Collider
 {
 public:
-	SphereCollider() {}
-	inline SphereCollider(const glm::vec3& position, float radius)
-		:radius(radius)
-	{
-		print("Created Sphere Collider", DebugMessageTier::INFO);
-	}
+	SphereCollider(const glm::vec3& position, float radius);
 
-	glm::vec3 getSize() = 0;
+	glm::vec3 getSize();
 
-	float* getRadius() { return &radius; }
-	void setRadius(float newRadius) { radius = newRadius; }
+	float* getRadius();
+	void setRadius(float newRadius);
 
 private:
 	float radius = 0;
@@ -69,35 +56,14 @@ private:
 class BoxCollider : public Collider
 {
 public:
-	inline BoxCollider(const glm::vec3& position, float x, float y, float z)
-		:sizeX(x), sizeY(y), sizeZ(z)
-	{
-		print("Created Box Collider", DebugMessageTier::INFO);
-	}
+	BoxCollider(const glm::vec3& position, float x, float y, float z);
 
-	glm::vec3 getSize()
-	{
-		std::cout << "rite";
-		return glm::vec3(sizeX, sizeY, sizeZ);
-	}
+	glm::vec3 getSize();
 
-	inline void setSize(float x = 0 , float y = 0 , float z = 0 )
-	{
-		sizeX = x;
-		sizeY = y;
-		sizeZ = z;
-	}
+	void setSize(float x, float y, float z);
 
 	//we set this to default -100 because it's safe to assume we will never manually call it with such parameters
-	inline void scaleSize(float x = -100, float y = -100, float z = -100) 
-	{
-		if(sizeX != -100)
-			sizeX *= x;
-		if (sizeY != -100)
-			sizeY *= y;
-		if (sizeZ != -100)
-			sizeZ *= z;
-	}
+	void scaleSize(float x, float y, float z);
 
 private:
 	float sizeX, sizeY, sizeZ;

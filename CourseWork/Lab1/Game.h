@@ -38,7 +38,7 @@ private:
 	void renderLoop();
 
 	bool checkCollisions(glm::vec3 pos1, float rad1, glm::vec3 pos2, float rad2); //legacy
-	bool checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec3& pos2); //collider-agnostic collision algorithm
+	static bool checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec3& pos2); //collider-agnostic collision algorithm
 
 	void playAudio(unsigned int Source, glm::vec3 pos);
 

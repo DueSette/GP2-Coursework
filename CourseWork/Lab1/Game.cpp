@@ -6,8 +6,7 @@ Game::Game()
 {}
 
 Game::~Game()
-{
-}
+{}
 
 void Game::run()
 {
@@ -151,7 +150,7 @@ void Game::inputUpdate()
 
 			case SDLK_0:
 				GameObject* g = new GameObject;
-				g->initialise("..\\res\\models\\long lab table.obj", s_kTextures + "grid.png", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::SPHERE);
+				g->initialise("..\\res\\models\\long lab table.obj", s_kTextures + "grid.png", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::BOX);
 				gameObjectList.push_back(g);
 				audioSource.playSound(bangSFX);
 			}
@@ -185,17 +184,15 @@ void Game::physicsLoop()
 	for (int i = 0; i < gameObjectList.size(); i++)
 	{
 		GameObject* g1 = gameObjectList[i];
-		Collider* colA = g1->getCollider();
-		BoxCollider* cA = dynamic_cast<BoxCollider*> (colA);
+		BoxCollider* colA = g1->getCollider();		
 
-		cA->getSize();
-		if (colA == nullptr)		
+		if (colA == nullptr)
 			continue;
 		
 		for (int l = 0; l < gameObjectList.size(); l++)
 		{
 			GameObject* g2 = gameObjectList[l];
-			Collider* colB = g2->getCollider();
+			BoxCollider* colB = g2->getCollider();
 
 			if (colB == nullptr)
 				continue;

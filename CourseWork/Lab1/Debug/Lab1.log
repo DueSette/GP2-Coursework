@@ -1,10 +1,18 @@
-﻿  Game.cpp
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Utilities.h(22,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Game.cpp(185,20): warning C4018: '<': signed/unsigned mismatch
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Game.cpp(195,21): warning C4018: '<': signed/unsigned mismatch
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Game.cpp(218,20): warning C4018: '<': signed/unsigned mismatch
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Game.cpp(225,20): warning C4018: '<': signed/unsigned mismatch
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Game.cpp(238,21): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Lab1\Game.cpp(248): warning C4715: 'Game::checkCollisions': not all control paths return a value
-  LINK : D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Debug\CourseWork.exe not found or not built by the last incremental link; performing full link
-  Lab1.vcxproj -> D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\CourseWork\Debug\CourseWork.exe
+﻿  Collider.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(22,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+  Game.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(22,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(184,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(194,21): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(217,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(224,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(237,21): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  GameObject.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(22,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+  Main.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(22,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+  Model.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(22,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+  Generating Code...
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(247): warning C4715: 'Game::checkCollisions': not all control paths return a value
+  Lab1.vcxproj -> D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Debug\CourseWork.exe

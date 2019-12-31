@@ -29,7 +29,7 @@ public:
 	void rotate(glm::vec3 rotation);
 
 	bool AddCollider(ColliderType t);
-	Collider* getCollider();
+	BoxCollider* getCollider();
 
 private:
 	void Setup();
@@ -38,6 +38,5 @@ private:
 	Mesh* _mesh;
 	Texture* _texture;
 	Shader* _shader;
-	Collider* _collider = nullptr;
+	BoxCollider* _collider = nullptr;
 };
-

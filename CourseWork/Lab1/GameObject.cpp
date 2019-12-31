@@ -19,7 +19,7 @@ void GameObject::initialise(const std::string& meshName, const std::string& text
 		break;
 
 	case ColliderType::SPHERE:
-		_collider = &SphereCollider(*_transform->GetPos(), 1);
+		//_collider = &SphereCollider(*_transform->GetPos(), 1);
 		break;
 
 	case ColliderType::BOX:
@@ -88,13 +88,13 @@ bool GameObject::AddCollider(ColliderType t)
 
 	if (t == ColliderType::BOX)
 		_collider = &BoxCollider(*_transform->GetPos(), 1, 1, 1);
-	else if (t == ColliderType::SPHERE)
-		_collider = &SphereCollider(*_transform->GetPos(), 1);
+	//else if (t == ColliderType::SPHERE)
+		//_collider = &SphereCollider(*_transform->GetPos(), 1);
 
 	return true;
 }
 
-Collider* GameObject::getCollider()
+BoxCollider* GameObject::getCollider()
 {
 	return _collider;
 }
