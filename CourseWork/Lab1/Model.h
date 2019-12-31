@@ -35,13 +35,17 @@ private:
 //===================================  COLLISION  =============================
 enum ColliderType {NONE, SPHERE, BOX }; //useful for scaling and pattern matching
 
-//base class, never used directly
+//base class, never used directly, needed for dynamic casting
 class Collider
-{};
+{
+public:
+	virtual ~Collider(); //without having a vTable we cannot use dynamic casting, hence the virtual destructor
+};
 
 class SphereCollider : public Collider
 {
 public:
+	SphereCollider();
 	SphereCollider(const glm::vec3& position, float radius);
 
 	glm::vec3 getSize();
@@ -56,6 +60,7 @@ private:
 class BoxCollider : public Collider
 {
 public:
+	BoxCollider();
 	BoxCollider(const glm::vec3& position, float x, float y, float z);
 
 	glm::vec3 getSize();

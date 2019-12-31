@@ -115,3 +115,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &textureHandler); // number of and address of textures
 }
 #pragma endregion
+
+Collider::~Collider()
+{
+}

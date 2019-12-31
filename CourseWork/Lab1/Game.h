@@ -9,6 +9,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include "Model.h"
 #include "Display.h"
 #include "Shader.h"
 #include "Transform.h"

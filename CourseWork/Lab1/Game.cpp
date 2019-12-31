@@ -184,25 +184,55 @@ void Game::physicsLoop()
 	for (int i = 0; i < gameObjectList.size(); i++)
 	{
 		GameObject* g1 = gameObjectList[i];
-		BoxCollider* colA = g1->getCollider();		
+		Collider* colA = g1->getCollider();
 
-		if (colA == nullptr)
+		BoxCollider* boxCollider1 = nullptr;	//these are needed for dynamic casting, one of them will stay null
+		SphereCollider* sphereCollider1 = nullptr;
+
+		if (colA == nullptr) //if the base pointer is null skip loop (some objects might not have colliders)
 			continue;
-		
+
+		boxCollider1 = dynamic_cast<BoxCollider*> (colA);
+		if (!boxCollider1)
+			sphereCollider1 = dynamic_cast<SphereCollider*> (colA);
+
 		for (int l = 0; l < gameObjectList.size(); l++)
 		{
 			GameObject* g2 = gameObjectList[l];
-			BoxCollider* colB = g2->getCollider();
+			Collider* colB = g2->getCollider();
 
-			if (colB == nullptr)
+			BoxCollider* boxCollider2 = nullptr;
+			SphereCollider* sphereCollider2 = nullptr;
+
+			if (colB == nullptr || colA == colB)
 				continue;
 
-			if (colA != colB)
+			boxCollider2 = dynamic_cast<BoxCollider*> (colB);
+			if (!boxCollider2)
+				sphereCollider2 = dynamic_cast<SphereCollider*> (colB);
+
+			if (!boxCollider1 && !boxCollider2)
 			{
-				if (checkCollisions(colA->getSize(), colB->getSize(), g1->getPosition(), g2->getPosition()))
-					std::cout << colA << " collided with " << colB << std::endl;
-				else
-					std::cout << colA << " did not collide with " << colB << std::endl;
+				if (checkCollisions(sphereCollider1->getSize(), sphereCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+					std::cout << colA << " collided with " << colB << " SPHERE VS SPHERE" << std::endl;
+			}
+
+			else if (!boxCollider1 && boxCollider2)
+			{ 
+				if(checkCollisions(sphereCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+					std::cout << colA << " collided with " << colB << " SPHERE VS BOX" << std::endl;
+			}
+
+			else if (boxCollider1 && !boxCollider2)
+			{
+				if(checkCollisions(boxCollider1->getSize(), sphereCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+					std::cout << colA << " collided with " << colB << " BOX VS SPHERE" << std::endl;
+			}
+
+			else if (boxCollider1 && boxCollider2)
+			{
+				if(checkCollisions(boxCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+					std::cout << colA << " collided with " << colB << " BOX VS BOX" << std::endl;
 			}
 		}
 	}
