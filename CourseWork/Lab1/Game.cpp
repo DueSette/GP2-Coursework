@@ -39,9 +39,9 @@ void Game::init()
 	gameObjectList.push_back(&_map);
 
 	//SOUND
-	bangSFX = audioSource.loadSound("..\\res\\audio\\dolphin.wav");
-	backGroundMusic = audioSource.loadSound("..\\res\\audio\\vapor.wav");
-	audioSource.setlistener(VECTOR_ZERO, VECTOR_FORWARD);
+	objectSpawnSound = audioManager.loadSound("..\\res\\audio\\dolphin.wav");
+	backGroundMusic = audioManager.loadSound("..\\res\\audio\\vapor.wav");
+	audioManager.setlistener(VECTOR_ZERO, VECTOR_FORWARD);
 	
 	_player.cam.initialiseCamera
 	(
@@ -145,14 +145,14 @@ void Game::inputUpdate()
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_SPACE:
-				_player.jump(0.3f);
+				_player.jump(0.35f);				
 				break;
 
 			case SDLK_0:
 				GameObject* g = new GameObject;
-				g->initialise("..\\res\\models\\long lab table.obj", s_kTextures + "grid.png", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::BOX);
+				g->initialise("..\\res\\models\\long lab table.obj", s_kTextures + "grid.png", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, 100, 15), ColliderType::BOX);
 				gameObjectList.push_back(g);
-				audioSource.playSound(bangSFX);
+				audioManager.playSound(objectSpawnSound);
 			}
 			break;
 		}
@@ -167,6 +167,7 @@ void Game::inputUpdate()
 	_player.cam.moveOnZ(camSpeedZ);
 }
 
+/*
 void Game::playAudio(unsigned int Source, glm::vec3 pos)
 {
 	ALint state;
@@ -175,7 +176,7 @@ void Game::playAudio(unsigned int Source, glm::vec3 pos)
 	if (AL_PLAYING != state)
 		audioSource.playSound(Source, pos);
 }
-
+*/
 void Game::physicsLoop()
 {
 	// ===== COLLISIONS
@@ -218,20 +219,20 @@ void Game::physicsLoop()
 			}
 
 			else if (!boxCollider1 && boxCollider2)
-			{ 
-				if(checkCollisions(sphereCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+			{
+				if (checkCollisions(sphereCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
 					std::cout << colA << " collided with " << colB << " SPHERE VS BOX" << std::endl;
 			}
 
 			else if (boxCollider1 && !boxCollider2)
 			{
-				if(checkCollisions(boxCollider1->getSize(), sphereCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+				if (checkCollisions(boxCollider1->getSize(), sphereCollider2->getSize(), g1->getPosition(), g2->getPosition()))
 					std::cout << colA << " collided with " << colB << " BOX VS SPHERE" << std::endl;
 			}
 
 			else if (boxCollider1 && boxCollider2)
 			{
-				if(checkCollisions(boxCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
+				if (checkCollisions(boxCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
 					std::cout << colA << " collided with " << colB << " BOX VS BOX" << std::endl;
 			}
 		}
@@ -272,4 +273,6 @@ bool Game::checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec
 	if (abs(pos1.x - pos2.x) < s1.x + s2.x)
 		if (abs(pos1.y - pos2.y) < s1.y + s2.y)
 			return (abs(pos1.z - pos2.z) < s1.z + s2.z);
+
+	return false;
 }

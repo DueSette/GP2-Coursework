@@ -28,10 +28,10 @@ public:
 	void translate(glm::vec3 translation);
 	void rotate(glm::vec3 rotation);
 
-	bool AddCollider(ColliderType t);
+	bool addCollider(ColliderType t);
 	Collider* getCollider();
 
-private:
+protected:
 	void Setup();
 
 	Transform* _transform;

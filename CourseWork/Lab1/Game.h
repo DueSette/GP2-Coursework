@@ -16,6 +16,7 @@
 #include "GameObject.h"
 #include "Audio.h"
 #include "Player.h"
+#include "AudioManager.h"
 
 enum class GameState { PLAY, EXIT, PAUSE };
 
@@ -25,7 +26,6 @@ static int frames = 0;
 
 class Game
 {
-
 public:
 	Game();
 	~Game();
@@ -40,8 +40,6 @@ private:
 
 	bool checkCollisions(glm::vec3 pos1, float rad1, glm::vec3 pos2, float rad2); //legacy
 	static bool checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec3& pos2); //collider-agnostic collision algorithm
-
-	void playAudio(unsigned int Source, glm::vec3 pos);
 
 	Player _player;
 	Camera _camera;
@@ -58,9 +56,11 @@ private:
 	GameObject _dol2;
 
 	//Sound Stuff
-	Audio audioSource;
+	//void playAudio(unsigned int Source, glm::vec3 pos);
 
-	unsigned int bangSFX;
+	//Audio audioSource;
+
+	unsigned int objectSpawnSound;
 	unsigned int backGroundMusic;
 
 	//INPUT

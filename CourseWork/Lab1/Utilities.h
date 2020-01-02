@@ -17,6 +17,7 @@
 static const std::string s_kModels = "..\\res\\models\\";
 static const std::string s_kTextures = "..\\res\\textures\\";
 static const std::string s_kShaders = "..\\res\\shaders\\";
+static const std::string s_kSounds = "..\\res\\audio\\";
 
 //Here are useful functions that are kept in their own file for readability's sake
 typedef enum DebugMessageTier { INFO, WARNING, ERROR };

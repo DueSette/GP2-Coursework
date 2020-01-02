@@ -19,12 +19,20 @@ void GameObject::initialise(const std::string& meshName, const std::string& text
 		break;
 
 	case ColliderType::SPHERE:
-		_collider = new SphereCollider(*_transform->GetPos(), 1);
+	{
+		glm::vec3 s = *_transform->GetScale();
+		float f = max(s.x, s.y);
+		f = max(f, s.z);
+		_collider = new SphereCollider(*_transform->GetPos(), f);
+	}
 		break;
 
 	case ColliderType::BOX:
-		_collider = new BoxCollider(*_transform->GetPos(), 1, 1, 1);
+	{
+		glm::vec3 s = *_transform->GetScale();
+		_collider = new BoxCollider(*_transform->GetPos(), s.x, s.y, s.z);
 		break;
+	}
 
 	default:
 		print("Unknown collider type is being added", DebugMessageTier::ERROR);
@@ -82,7 +90,7 @@ void GameObject::rotate(glm::vec3 rotation)
 	_transform->SetRot(*_transform->GetRot() + rotation);
 }
 
-bool GameObject::AddCollider(ColliderType t)
+bool GameObject::addCollider(ColliderType t)
 {
 	if (_collider != nullptr) { return false; } //if we already have a collider, don't add another one (might add collider swap later)
 
