@@ -17,11 +17,14 @@ void Game::run()
 void Game::init()
 {
 	_gameDisplay.initialise();
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_SetRelativeMouseMode(SDL_TRUE);					  
 	counter = 0.0f;
 
 	_map.initialise(s_kModels + "map.obj", s_kTextures + "water.jpg", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, -1, 0), ColliderType::BOX);
+	_map.isKinematic = true;
+	_map._name = "Map";
 	_map.setScale(glm::vec3(20, 20, 20));
+	_map.setColliderSize(30, 0.6f, 30);
 	_map.setPosition(-VECTOR_UP * 5.0f);
 
 	_dol0.initialise(s_kModels + "dolf.obj", s_kTextures + "pearly.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
@@ -36,7 +39,7 @@ void Game::init()
 	dolphins.push_back(&_dol0);
 	dolphins.push_back(&_dol1);
 	dolphins.push_back(&_dol2);
-	gameObjectList.push_back(&_map);
+	physicsGameObjectList.push_back(&_map);
 
 	//SOUND
 	objectSpawnSound = audioManager.loadSound("..\\res\\audio\\dolphin.wav");
@@ -73,6 +76,8 @@ void Game::gameLoop()
 void Game::inputUpdate()
 {
 	SDL_Event e;
+	//reading the keyboard state enables us to take more than one input at a time
+	//without it, moving diagonally would be very blocky
 	const Uint8* keyboard_state = SDL_GetKeyboardState(NULL);
 
 	while (SDL_PollEvent(&e))
@@ -145,13 +150,21 @@ void Game::inputUpdate()
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_SPACE:
-				_player.jump(0.35f);				
+				_player.jump(0.35f);
 				break;
 
 			case SDLK_0:
-				GameObject* g = new GameObject;
-				g->initialise("..\\res\\models\\long lab table.obj", s_kTextures + "grid.png", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, 100, 15), ColliderType::BOX);
-				gameObjectList.push_back(g);
+				PhysicsGameObject* g = new PhysicsGameObject;
+
+				glm::vec3 gPos = glm::vec3(_player.cam.getPosition().x + _player.cam.getForward().x * 3.5f, 5.5f, _player.cam.getPosition().z + _player.cam.getForward().z * 3.5f);
+				glm::vec3 gDir = (glm::vec3)normalize(gPos - _player.cam.getPosition());
+				gDir.y = 0;
+				g->initialiseRandom(gPos); //instantiating a random-assembled object with the newly calculated position (always in front and above player)
+				g->addForce(gDir * 5.0f);
+
+				g->_name = "Vapor Head"; //makes debugging easier
+				g->mass = 0.6f;
+				physicsGameObjectList.push_back(g);
 				audioManager.playSound(objectSpawnSound);
 			}
 			break;
@@ -167,24 +180,14 @@ void Game::inputUpdate()
 	_player.cam.moveOnZ(camSpeedZ);
 }
 
-/*
-void Game::playAudio(unsigned int Source, glm::vec3 pos)
-{
-	ALint state;
-	alGetSourcei(Source, AL_SOURCE_STATE, &state);
-
-	if (AL_PLAYING != state)
-		audioSource.playSound(Source, pos);
-}
-*/
 void Game::physicsLoop()
 {
-	// ===== COLLISIONS
 	_player.updatePlayer();
 
-	for (int i = 0; i < gameObjectList.size(); i++)
+	// ===== COLLISIONS
+	for (int i = 0; i < physicsGameObjectList.size(); i++)
 	{
-		GameObject* g1 = gameObjectList[i];
+		PhysicsGameObject* g1 = physicsGameObjectList[i];
 		Collider* colA = g1->getCollider();
 
 		BoxCollider* boxCollider1 = nullptr;	//these are needed for dynamic casting, one of them will stay null
@@ -197,9 +200,9 @@ void Game::physicsLoop()
 		if (!boxCollider1)
 			sphereCollider1 = dynamic_cast<SphereCollider*> (colA);
 
-		for (int l = 0; l < gameObjectList.size(); l++)
+		for (int l = 0; l < physicsGameObjectList.size(); l++)
 		{
-			GameObject* g2 = gameObjectList[l];
+			PhysicsGameObject* g2 = physicsGameObjectList[l];
 			Collider* colB = g2->getCollider();
 
 			BoxCollider* boxCollider2 = nullptr;
@@ -227,22 +230,31 @@ void Game::physicsLoop()
 			else if (boxCollider1 && !boxCollider2)
 			{
 				if (checkCollisions(boxCollider1->getSize(), sphereCollider2->getSize(), g1->getPosition(), g2->getPosition()))
-					std::cout << colA << " collided with " << colB << " BOX VS SPHERE" << std::endl;
+				{
+					std::cout << colA << " collided with " << colB << "BOX VS SPHERE" << std::endl;
+				}
 			}
 
 			else if (boxCollider1 && boxCollider2)
 			{
 				if (checkCollisions(boxCollider1->getSize(), boxCollider2->getSize(), g1->getPosition(), g2->getPosition()))
-					std::cout << colA << " collided with " << colB << " BOX VS BOX" << std::endl;
+				{
+					PhysicsGameObject* p = (PhysicsGameObject*)boxCollider1->parent;
+					p->onCollision();
+				}
 			}
 		}
 	}
+
+	for (int i = 0; i < physicsGameObjectList.size(); i++)
+		physicsGameObjectList[i]->updatePhysics();
 }
 
 void Game::renderLoop()
 {
 	_gameDisplay.clearDisplay(cos(counter) / 2 + 0.55f, -cos(counter) / 4 + 0.25f, 0.4f, 1);
 
+	//render dolphins separately (in a non-demo project this would be avoided at all costs)
 	for (int j = 0; j < dolphins.size(); j++)
 	{
 		dolphins[j]->translate(glm::vec3(1 * cos(counter), 1 * sin(counter), 0) * deltaTime);
@@ -250,10 +262,12 @@ void Game::renderLoop()
 		dolphins[j]->drawProcedure(_player.cam); //that's how we render every object in the scene
 	}
 
+	//separate loops for normal game objects and physics-enabled gameobjects
 	for (int i = 0; i < gameObjectList.size(); i++)
-	{
 		gameObjectList[i]->drawProcedure(_player.cam);
-	}
+
+	for (int i = 0; i < physicsGameObjectList.size(); i++)
+		physicsGameObjectList[i]->drawProcedure(_player.cam);
 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnd();

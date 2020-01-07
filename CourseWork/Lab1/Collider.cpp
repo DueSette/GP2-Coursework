@@ -36,7 +36,6 @@ BoxCollider::BoxCollider(const glm::vec3& position, float x, float y, float z)
 	print("Created Box Collider", DebugMessageTier::INFO);
 }
 
-
 glm::vec3 BoxCollider::getSize()
 {
 	return glm::vec3(sizeX, sizeY, sizeZ);

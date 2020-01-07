@@ -13,7 +13,7 @@
 #include "Display.h"
 #include "Shader.h"
 #include "Transform.h"
-#include "GameObject.h"
+#include "PhysicsGameObject.h"
 #include "Audio.h"
 #include "Player.h"
 #include "AudioManager.h"
@@ -47,19 +47,16 @@ private:
 	GameState _gameState;
 
 	std::vector<GameObject*> gameObjectList;
+	std::vector<PhysicsGameObject*> physicsGameObjectList;
 	std::vector<GameObject*> dolphins; //since they move in a specific way we put them in a separate list
 
-	GameObject _map;
+	PhysicsGameObject _map;
 
 	GameObject _dol0;
 	GameObject _dol1;
 	GameObject _dol2;
 
-	//Sound Stuff
-	//void playAudio(unsigned int Source, glm::vec3 pos);
-
-	//Audio audioSource;
-
+	//Sound clips
 	unsigned int objectSpawnSound;
 	unsigned int backGroundMusic;
 

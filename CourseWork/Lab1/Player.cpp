@@ -26,10 +26,10 @@ void Player::jump(float pwr) //pwr is the amount in vertical units that we want 
 
 void Player::updatePlayer()
 {	
-	velocityUpdate();
+	velocityUpdate(); //calculates velocity for the current frame
+	cam.translate(velocity); //moves camera accordingly
 
-	cam.translate(velocity);
-	if (cam.getPosition().y < 2.0f)
+	if (cam.getPosition().y < 2.0f) //we stop the player after it gets to a certain minimum height
 	{
 		velocity.y = 0.0f;
 		cam.setPosition(glm::vec3(cam.getPosition().x, 2.0f, cam.getPosition().z)); //reset on the Y in case it compenetrates a little

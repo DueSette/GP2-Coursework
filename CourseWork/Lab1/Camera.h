@@ -17,8 +17,9 @@ public:
 
 	void moveOnZ(float val);
 	void moveOnX(float val);
-	
-	inline void yaw(float angle) //rotates around Y axis (goes left and right)
+
+	//rotates around Y axis (goes left and right)
+	inline void yaw(float angle)
 	{
 		static const vec3 UP(0.0f, 1.0f, 0.0f);
 
@@ -28,7 +29,8 @@ public:
 		up = vec3(normalize(rotation * vec4(up, 0.0)));
 	}
 
-	inline void pitch(float angle) //rotates around X axis (goes up and down)
+	//rotates around X axis (goes up and down)
+	inline void pitch(float angle)
 	{
 		glm::vec3 right = glm::normalize(glm::cross(up, forward));
 
@@ -41,6 +43,8 @@ public:
 	inline void setPosition(glm::vec3 newPos) { pos = newPos; }
 
 	inline void translate(glm::vec3 offset) { pos += offset; }
+
+	inline glm::vec3 getForward() { return forward; }
 
 private:
 	mat4 projection;

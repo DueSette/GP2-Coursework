@@ -40,6 +40,7 @@ class Collider
 {
 public:
 	virtual ~Collider(); //without having a vTable we cannot use dynamic casting, hence the virtual destructor
+	void* parent;
 };
 
 class SphereCollider : public Collider

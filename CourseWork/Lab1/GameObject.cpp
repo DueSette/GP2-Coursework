@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
-	:_mesh(new Mesh()), _texture(nullptr), _shader(new Shader()), _transform(new Transform())
+	:_mesh(new Mesh()), _texture(nullptr), _shader(new Shader()), _transform(new Transform()), _name("")
 {}
 
 //General startup function that gets all the other classes and files in one place, one overload lets you select shaders and the other uses "regular" ones
@@ -78,6 +78,23 @@ void GameObject::setRotation(glm::vec3 rot)
 void GameObject::setScale(glm::vec3 scale)
 {
 	_transform->SetScale(scale);
+}
+
+void GameObject::setColliderSize(float x, float y, float z)
+{
+	if (_collider == nullptr) { return; } //usual guard clause
+
+	BoxCollider* boxCollider1 = nullptr;	//these are needed for dynamic casting, one of them will stay null
+	SphereCollider* sphereCollider1 = nullptr;
+
+	boxCollider1 = dynamic_cast<BoxCollider*> (_collider);
+	if (!boxCollider1)
+	{
+		sphereCollider1 = dynamic_cast<SphereCollider*> (_collider);
+		sphereCollider1->setRadius((x + y + z) / 3);
+	}
+
+	boxCollider1->setSize(x, y, z);
 }
 
 void GameObject::translate(glm::vec3 translation)

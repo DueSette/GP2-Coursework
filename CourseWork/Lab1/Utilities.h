@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 
 //Useful macros for catching bugs
 #define ASSERT(x) if(!(x)) __debugbreak();

@@ -25,11 +25,15 @@ public:
 	void setRotation(glm::vec3 rot);	
 	void setScale(glm::vec3 scale);
 
+	void setColliderSize(float x, float y, float z);
+
 	void translate(glm::vec3 translation);
 	void rotate(glm::vec3 rotation);
 
 	bool addCollider(ColliderType t);
 	Collider* getCollider();
+
+	std::string _name;
 
 protected:
 	void Setup();
