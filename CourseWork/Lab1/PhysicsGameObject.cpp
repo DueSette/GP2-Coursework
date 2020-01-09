@@ -16,10 +16,10 @@ void PhysicsGameObject::initialiseRandom(glm::vec3 pos)
 {
 	std::string meshName, textureName, vertShader, fragShader;
 	//We select a random entry from each of these arrays, setting them like this makes the process scalable
-	std::string meshNames[] = { "bust1.obj" };
-	std::string textureNames[] = { "grid.png", "checker.png", "hypnotic.png", "pearly.png" };
-	std::string vertexNames[] = { "vertex_regular.shader", "vertex_scrollTexture.shader" };
-	std::string fragmentNames[] = { "fragment.shader" };
+	std::string meshNames[] = { "bust1.obj", "dolf.obj" };
+	std::string textureNames[] = { "grid.png", "checker.png", "bricks.jpg", "pearly.png", "water.jpg" };
+	std::string vertexNames[] = { "vertex_regular.shader", "vertex_scrollTexture.shader"};
+	std::string fragmentNames[] = { "fragment_vanilla.shader", "fragment_VCR.shader" };
 
 	//this is deterministic random generation, not recommended but good enough in this case
 	int r = rand() % (sizeof(meshNames) / sizeof(*meshNames));
@@ -35,10 +35,16 @@ void PhysicsGameObject::initialiseRandom(glm::vec3 pos)
 	fragShader = s_kShaders + fragmentNames[r];
 
 	initialise(meshName, textureName, vertShader, fragShader, pos, ColliderType::BOX);
-	setScale(glm::vec3(0.01f, 0.01f, 0.01f)); //this is hardcoded in because the internet downloaded model was set to an irregular size
-	getCollider()->parent = this;
+	_name = meshName;
 
-	std::cout << sizeof(meshNames) / sizeof(*meshNames) << " and " << meshNames->size() << std::endl;
+	if (_name == s_kModels + "bust1.obj")
+		setScale(glm::vec3(0.01f, 0.01f, 0.01f)); //this is hardcoded in because the internet downloaded model was set to an irregular size
+	else
+	{
+		rotate(glm::vec3(100, 0, 170));
+		setScale(glm::vec3(0.06f, 0.06f, 0.06f));
+	}
+	getCollider()->parent = this;
 }
 
 void PhysicsGameObject::onCollision()

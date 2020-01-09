@@ -14,12 +14,15 @@ class Player
 public:
 	Player();
 	Camera cam;
+
 	void jump(float pwr);
 	void updatePlayer();
 
 private:
 	void velocityUpdate();
 	void init();
+
+	void correctPosition();
 
 	glm::vec3 velocity;
 	bool grounded = true;

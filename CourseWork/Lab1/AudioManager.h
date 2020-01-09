@@ -8,7 +8,7 @@ static void loadSound(const char* filename)
 	audioManager.loadSound(filename);
 }
 
-static void playAudio(unsigned int Source, glm::vec3 pos)
+static void playAudioNoRepeat(unsigned int Source, glm::vec3 pos)
 {
 	ALint state;
 	alGetSourcei(Source, AL_SOURCE_STATE, &state);
@@ -17,7 +17,7 @@ static void playAudio(unsigned int Source, glm::vec3 pos)
 		audioManager.playSound(Source, pos);
 }
 
-static void playAudio(unsigned int Source)
+static void playAudioNoRepeat(unsigned int Source)
 {
 	ALint state;
 	alGetSourcei(Source, AL_SOURCE_STATE, &state);

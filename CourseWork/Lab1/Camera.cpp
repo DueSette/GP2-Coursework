@@ -10,7 +10,7 @@ void Camera::initialiseCamera(const vec3& pos, float fov, float aspect, float ne
 
 mat4 Camera::GetViewProjection() const 
 {
-	return projection* glm::lookAt(pos, pos + forward, up);
+	return projection * glm::lookAt(pos, pos + forward, up);
 }
 
 void Camera::moveOnZ(float val)

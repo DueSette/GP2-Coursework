@@ -20,20 +20,20 @@ void Game::init()
 	SDL_SetRelativeMouseMode(SDL_TRUE);					  
 	counter = 0.0f;
 
-	_map.initialise(s_kModels + "map.obj", s_kTextures + "water.jpg", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment.shader", glm::vec3(0, -1, 0), ColliderType::BOX);
+	_map.initialise(s_kModels + "map.obj", s_kTextures + "water.jpg", s_kShaders + "vertex_regular.shader", s_kShaders + "fragment_VCR.shader", glm::vec3(0, -1, 0), ColliderType::BOX);
 	_map.isKinematic = true;
 	_map._name = "Map";
 	_map.setScale(glm::vec3(20, 20, 20));
 	_map.setColliderSize(30, 0.6f, 30);
 	_map.setPosition(-VECTOR_UP * 5.0f);
 
-	_dol0.initialise(s_kModels + "dolf.obj", s_kTextures + "pearly.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
+	_dol0.initialise(s_kModels + "dolf.obj", s_kTextures + "pearly.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment_VCR.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
 	_dol0.setRotation(glm::vec3(0, 0, 0));
 
-	_dol1.initialise(s_kModels + "dolf.obj", s_kTextures + "hypnotic.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
+	_dol1.initialise(s_kModels + "dolf.obj", s_kTextures + "hypnotic.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment_VCR.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
 	_dol1.setRotation(glm::vec3(0, 90, 0));
 
-	_dol2.initialise(s_kModels + "dolf.obj", s_kTextures + "grid.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
+	_dol2.initialise(s_kModels + "dolf.obj", s_kTextures + "grid.png", s_kShaders + "vertex_scrollTexture.shader", s_kShaders + "fragment_VCR.shader", glm::vec3(0, 0, 15), ColliderType::NONE);
 	_dol2.setRotation(glm::vec3(0, -90, 0));
 
 	dolphins.push_back(&_dol0);
@@ -69,7 +69,7 @@ void Game::gameLoop()
 		physicsLoop();
 		renderLoop();
 
-		playAudio(backGroundMusic, VECTOR_ZERO);
+		playAudioNoRepeat(backGroundMusic, VECTOR_ZERO);
 	}
 }
 
@@ -151,9 +151,18 @@ void Game::inputUpdate()
 			{
 			case SDLK_SPACE:
 				_player.jump(0.35f);
-				break;
+				break;			
+			}
+			break;
+		}
 
-			case SDLK_0:
+		case SDL_MOUSEWHEEL:
+			_player.cam.moveOnZ(e.wheel.y * 4.0f);
+			break;
+
+		case SDL_MOUSEBUTTONDOWN:
+			if (e.button.button == SDL_BUTTON_LEFT)
+			{
 				PhysicsGameObject* g = new PhysicsGameObject;
 
 				glm::vec3 gPos = glm::vec3(_player.cam.getPosition().x + _player.cam.getForward().x * 3.5f, 5.5f, _player.cam.getPosition().z + _player.cam.getForward().z * 3.5f);
@@ -162,16 +171,10 @@ void Game::inputUpdate()
 				g->initialiseRandom(gPos); //instantiating a random-assembled object with the newly calculated position (always in front and above player)
 				g->addForce(gDir * 5.0f);
 
-				g->_name = "Vapor Head"; //makes debugging easier
 				g->mass = 0.6f;
 				physicsGameObjectList.push_back(g);
 				audioManager.playSound(objectSpawnSound);
 			}
-			break;
-		}
-
-		case SDL_MOUSEWHEEL:
-			_player.cam.moveOnZ(e.wheel.y * 4.0f);
 			break;
 		}
 	}
@@ -247,7 +250,18 @@ void Game::physicsLoop()
 	}
 
 	for (int i = 0; i < physicsGameObjectList.size(); i++)
+	{
 		physicsGameObjectList[i]->updatePhysics();
+		if (physicsGameObjectList[i]->getPosition().y < -115)
+		{
+			delete physicsGameObjectList[i];
+			physicsGameObjectList.erase(physicsGameObjectList.begin() + i);
+		}
+		else if(physicsGameObjectList[i]->_name == s_kModels + "bust1.obj")
+		{
+			physicsGameObjectList[i]->rotate(glm::vec3(0, 0.9f * deltaTime, 0));
+		}
+	}
 }
 
 void Game::renderLoop()

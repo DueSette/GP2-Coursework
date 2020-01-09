@@ -30,6 +30,4 @@ private:
 	SDL_GLContext _context; //global variable to hold the context
 	
 	ScreenInfo _screenInfo;
-
 };
-

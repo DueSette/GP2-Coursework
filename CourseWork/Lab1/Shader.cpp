@@ -10,13 +10,14 @@ void Shader::createShaderProgram()
 {
 	program = glCreateProgram(); // create shader program (openGL saves as ref number)
 	shaders[0] = CreateShader(LoadShader("..\\res\\shaders\\vertex_regular.shader"), GL_VERTEX_SHADER); // create vertex shader
-	shaders[1] = CreateShader(LoadShader("..\\res\\shaders\\fragment.shader"), GL_FRAGMENT_SHADER); // create fragment shader
+	shaders[1] = CreateShader(LoadShader("..\\res\\shaders\\fragment_vanilla.shader"), GL_FRAGMENT_SHADER); // create fragment shader
 
 	for (unsigned int i = 0; i < NUM_SHADERS; i++)
 	{
 		glAttachShader(program, shaders[i]); //add all our shaders to the shader program "shaders" 
 	}
 
+	//Not needed as location is specified in shader itself
 	//glBindAttribLocation(program, 0, "position"); // associate attribute variable with our shader program attribute (in this case attribute vec3 position;)
 	//glBindAttribLocation(program, 1, "texCoord");
 
@@ -42,6 +43,7 @@ void Shader::createShaderProgram(const std::string& vertexShaderName, const std:
 		glAttachShader(program, shaders[i]); //add all our shaders to the shader program "shaders" 
 	}
 
+	//Not needed as location is specified in shader itself
 	//glBindAttribLocation(program, 0, "position"); // associate attribute variable with our shader program attribute (in this case attribute vec3 position;)
 	//glBindAttribLocation(program, 1, "texCoord");
 

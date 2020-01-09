@@ -33,5 +33,6 @@ inline double updateDeltaTime()
 	The fix I put together checks if the number is unusually high (10 seems enough for any machine)
 	If it is that high, it uses recursion to recalculate the value
 	*/
+
 	return (s_doubleDeltaTime.count() > 10.0) ? updateDeltaTime() : s_doubleDeltaTime.count(); //this is needed for everything relying on deltaTime on frame 1
 };

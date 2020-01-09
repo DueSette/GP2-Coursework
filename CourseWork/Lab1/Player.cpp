@@ -12,6 +12,21 @@ void Player::init()
 	jumpSound = audioManager.loadSound("..\\res\\audio\\Jump.wav");
 }
 
+void Player::correctPosition()
+{
+	float x = cam.getPosition().x;
+	float z = cam.getPosition().z;
+
+	if (x > 36.5f)
+		cam.setPosition(glm::vec3(36.49f, cam.getPosition().y, cam.getPosition().z));
+	else if (x < -36.5f)
+		cam.setPosition(glm::vec3(-36.49f, cam.getPosition().y, cam.getPosition().z));
+	if(z > 33.5f)
+		cam.setPosition(glm::vec3(cam.getPosition().x, cam.getPosition().y, 33.49f));
+	else if (z < -36.0f)
+		cam.setPosition(glm::vec3(cam.getPosition().x, cam.getPosition().y, -35.99f));
+}
+
 void Player::jump(float pwr) //pwr is the amount in vertical units that we want to jump
 {
 	if (grounded)
@@ -36,17 +51,17 @@ void Player::updatePlayer()
 		grounded = true;
 		audioManager.playSound(landSound);
 	}
+
+	correctPosition();
 }
 
 void Player::velocityUpdate()
 {
-	float subjectiveGravity;
+	if (grounded == true)
+		return;
 
-	if (velocity.y > 0.0f)
-		subjectiveGravity = -4.65f;
-	else
-		subjectiveGravity = -6.8f;
+	float subjectiveGravity; //different gravity strength depending on the sign of the vertical speed
 
-	if (cam.getPosition().y > 2.0f)	//slow player down if not "grounded"
-		velocity.y += subjectiveGravity * (fixedTime * fixedTime);
+	subjectiveGravity = velocity.y > 0 ? -4.65f : -6.8f;
+	velocity.y += subjectiveGravity * (fixedTime * fixedTime);
 }
