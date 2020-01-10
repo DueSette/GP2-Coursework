@@ -1,5 +1,11 @@
 #include "Model.h"
 
+/*
+==========
+The data retrievable from these classes allows us to check for collisions
+==========
+*/
+
 SphereCollider::SphereCollider()
 {
 }

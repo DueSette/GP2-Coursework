@@ -22,7 +22,7 @@ public:
 	~Shader();
 
 private:
-	static const unsigned int NUM_SHADERS = 2; // number of shaders
+	static const unsigned int NUM_SHADERS = 2; // number of shaders (vertex and fragment)
 
 	enum
 	{

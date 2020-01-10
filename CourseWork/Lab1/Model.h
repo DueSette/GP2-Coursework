@@ -32,7 +32,7 @@ private:
 	glm::vec3 position;
 };
 
-//===================================  COLLISION  =============================
+#pragma region //===================================  COLLISION  =============================
 enum ColliderType {NONE, SPHERE, BOX }; //useful for scaling and pattern matching
 
 //base class, never used directly, needed for dynamic casting
@@ -67,13 +67,13 @@ public:
 	glm::vec3 getSize();
 
 	void setSize(float x, float y, float z);
-
-	//we set this to default -100 because it's safe to assume we will never manually call it with such parameters
 	void scaleSize(float x, float y, float z);
 
 private:
 	float sizeX, sizeY, sizeZ;
 };
+#pragma endregion
+
 //===================================  TEXTURE  =============================
 
 class Texture
