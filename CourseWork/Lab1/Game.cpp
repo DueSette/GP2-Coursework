@@ -179,6 +179,8 @@ void Game::inputUpdate()
 		}
 	}
 
+	//cam speeds are stored separately to add a step 
+	//of separation between movement and on-screen results
 	_player.cam.moveOnX(camSpeedX);
 	_player.cam.moveOnZ(camSpeedZ);
 }
@@ -288,6 +290,7 @@ void Game::renderLoop()
 	_gameDisplay.swapBuffer();
 }
 
+//LEGACY
 bool Game::checkCollisions(glm::vec3 pos1, float rad1, glm::vec3 pos2, float rad2)
 {
 	float distance = (pos2.x - pos1.x) * (pos2.x - pos1.x) + (pos2.y - pos1.y) * (pos2.y - pos1.y) + (pos2.z - pos1.z) * (pos2.z - pos1.z);
@@ -296,6 +299,7 @@ bool Game::checkCollisions(glm::vec3 pos1, float rad1, glm::vec3 pos2, float rad
 	return distance > rad1 + rad2 ? false : true;
 }
 
+//NEW COLLISION METHOD
 bool Game::checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec3& pos2)
 {
 	if (abs(pos1.x - pos2.x) < s1.x + s2.x)

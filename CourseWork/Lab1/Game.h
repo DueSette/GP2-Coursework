@@ -38,8 +38,10 @@ private:
 	void physicsLoop();
 	void renderLoop();
 
-	bool checkCollisions(glm::vec3 pos1, float rad1, glm::vec3 pos2, float rad2); //legacy
-	static bool checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec3& pos2); //collider-agnostic collision algorithm
+	//legacy
+	bool checkCollisions(glm::vec3 pos1, float rad1, glm::vec3 pos2, float rad2);
+	//collider-agnostic collision algorithm
+	static bool checkCollisions(glm::vec3 s1, glm::vec3 s2, glm::vec3& pos1, glm::vec3& pos2);
 
 	Player _player;
 	Camera _camera;

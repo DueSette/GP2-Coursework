@@ -12,7 +12,7 @@ void GameObject::initialise(const std::string& meshName, const std::string& text
 	_shader->createShaderProgram(vertShader, fragShader);
 	_transform->SetPos(pos);
 	
-	switch (collType)
+	switch (collType) //creates a collider based on the specified parameter
 	{
 	case ColliderType::NONE:
 		_collider = nullptr;
@@ -41,7 +41,8 @@ void GameObject::initialise(const std::string& meshName, const std::string& text
 	this->Setup();
 }
 
-void GameObject::Setup() //post-initialize
+//post-initialize, useful for specific methods that need to make sure everything is instanced
+void GameObject::Setup()
 {
 	_transform->SetScale(glm::vec3(1, 1, 1));
 }
@@ -97,6 +98,7 @@ void GameObject::setColliderSize(float x, float y, float z)
 	boxCollider1->setSize(x, y, z);
 }
 
+//moves the object's transform
 void GameObject::translate(glm::vec3 translation)
 {
 	_transform->SetPos(*_transform->GetPos() + translation);
@@ -107,6 +109,7 @@ void GameObject::rotate(glm::vec3 rotation)
 	_transform->SetRot(*_transform->GetRot() + rotation);
 }
 
+//currently not in use but will be useful at an hypothetical later stage
 bool GameObject::addCollider(ColliderType t)
 {
 	if (_collider != nullptr) { return false; } //if we already have a collider, don't add another one (might add collider swap later)

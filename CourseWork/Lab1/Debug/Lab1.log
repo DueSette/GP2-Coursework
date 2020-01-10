@@ -1,3 +1,15 @@
-﻿  Model.cpp
+﻿  Game.cpp
 D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(24,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(193,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(208,21): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(254,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(274,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(282,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(285,20): warning C4018: '<': signed/unsigned mismatch
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Game.cpp(297,21): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  GameObject.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(24,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+  Main.cpp
+D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Lab1\Utilities.h(24,55): warning C4091: 'typedef ': ignored on left of 'DebugMessageTier' when no variable is declared
+  Generating Code...
   Lab1.vcxproj -> D:\Visual Studio Projects\C++\GameProgramming2 CourseWork\GP2-Coursework\CourseWork\Debug\CourseWork.exe
